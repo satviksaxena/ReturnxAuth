@@ -26,7 +26,7 @@ public class AppUserDetailsService implements UserDetailsService {
 		log.info("BEGIN - [loadUserByUsername()]");
 		log.debug("Username : " + s);
     	AuthenticationRequest authenticationRequest = authRequestRepo.findById(s).orElseThrow(
-			() -> new Exception("Token not found - ")
+			() -> new UsernameNotFoundException(s)
 		);
     	UserDetails user = new User(authenticationRequest.getUserName(), authenticationRequest.getPassword(), new ArrayList<>());
 		log.debug("User : " + user);

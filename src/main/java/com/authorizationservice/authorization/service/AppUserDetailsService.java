@@ -25,7 +25,9 @@ public class AppUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 		log.info("BEGIN - [loadUserByUsername()]");
 		log.debug("Username : " + s);
-    	AuthenticationRequest authenticationRequest = authRequestRepo.findById(s).orElseThrow();
+    	AuthenticationRequest authenticationRequest = authRequestRepo.findById(s).orElseThrow(
+			() -> new Exception("Token not found - ")
+		);
     	UserDetails user = new User(authenticationRequest.getUserName(), authenticationRequest.getPassword(), new ArrayList<>());
 		log.debug("User : " + user);
 		log.info("END - [loadUserByUsername()]");
